@@ -1,10 +1,10 @@
-import { UserButton} from "@clerk/nextjs"
+const DashboardPage =()=>{
 
-export default function DashboardPage() {
-
-    return(<>
-        <UserButton/>
-          </>
+    return(
+        <div className="h-full w-full overflow-hidden">
+            Dashboard
+        </div>
     )
 }
 
+export default DashboardPage;

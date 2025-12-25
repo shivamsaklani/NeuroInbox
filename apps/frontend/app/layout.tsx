@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono,Funnel_Sans,Syne_Mono } from "next/font/google";
+import { Funnel_Sans,Syne_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ReduxProvider from "./ReduxProvider";
@@ -19,6 +19,9 @@ const syneMono = Syne_Mono({
 export const metadata: Metadata = {
   title: "NeuroInbox",
   description: "NeuroInbox",
+  icons:{
+    icon:"/favicon.png"
+  }
 };
 
 export default function RootLayout({
@@ -27,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${funnelSans.variable} ${syneMono.variable} antialiased`}
       >
