@@ -1,9 +1,11 @@
+"use client"
 const DashboardPage =()=>{
 
-    return(
-        <div className="h-full w-full overflow-hidden">
-            Dashboard
-        </div>
+
+    return (
+        <>
+        Dashboard
+        </>
     )
 }
 

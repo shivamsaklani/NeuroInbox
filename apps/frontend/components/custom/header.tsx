@@ -32,7 +32,7 @@ const LandingHeader = () => {
           Pricing
         </Link>
       </div>
-      <div className=" hidden md:flex md:flex-row gap-2">
+      <div className=" hidden md:flex md:flex-row gap-4">
         <Button variant="secondary" onClick={() => router.push("/signup")}>Get Started</Button>
         <Button  variant="default" onClick={() => router.push("/signin")}>Signin</Button>
       </div>

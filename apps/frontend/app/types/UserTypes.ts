@@ -4,6 +4,7 @@ export interface EmailTypes {
   emailAddress: string;
 }
 
+
 export interface UserTypes {
   isAuth: boolean;
   name: string;
