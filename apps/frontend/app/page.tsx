@@ -10,6 +10,7 @@ import HeroSection from "@/components/custom/HeroSection"
 import { ReactNode } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { CardSpotlight } from "@/components/ui/card-spotlight";
 export default function LandingPage() {
 
   const workItems = [
@@ -192,7 +193,7 @@ export default function LandingPage() {
           const isPopular = index === 1; // center card
 
           return (
-            <Card
+            <CardSpotlight
               key={plan.type}
               className={cn(
                 "relative flex flex-col gap-4 rounded-xl p-6 transition-all",
@@ -244,7 +245,7 @@ export default function LandingPage() {
                      </li>
                 ))}
               </ul>
-            </Card>
+            </CardSpotlight>
           );
         })}
       </div>
@@ -257,7 +258,7 @@ export default function LandingPage() {
           const isPopular = index === 1;
 
           return (
-            <Card
+            <CardSpotlight
               key={plan.type}
               className={cn(
                 "relative flex flex-col gap-4 rounded-xl p-6 transition-all",
@@ -309,7 +310,7 @@ export default function LandingPage() {
                      </li>
                 ))}
               </ul>
-            </Card>
+            </CardSpotlight>
           );
         })}
       </div>

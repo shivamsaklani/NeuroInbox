@@ -6,12 +6,12 @@ import { ReactElement, useEffect, useState } from "react"
 
 export default function DashboardPage({children}:{
     children:ReactElement}) {
-    const [loading,setloading] = useState<boolean>(false);
-    // useEffect(()=>{
-    //     setTimeout(()=>{
-    //         setloading(false);
-    //     },5000);
-    // });
+    const [loading,setloading] = useState<boolean>(true);
+    useEffect(()=>{
+        setTimeout(()=>{
+            setloading(false);
+        },5000);
+    });
 
     const [open,setOpen] = useState<boolean>(false);
     return loading?<Splashscreen/>:(<>

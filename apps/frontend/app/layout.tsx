@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${funnelSans.variable} ${syneMono.variable} antialiased`}
+        className={`${funnelSans.variable} ${syneMono.variable} antialiased `+"scrollbar"}
       >
         
         <ClerkProvider>

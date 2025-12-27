@@ -31,7 +31,7 @@ export function Sidebar({
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 transition-all duration-300 mr-2",
+          "fixed inset-y-0 left-0 z-50 bg-background sm:bg-transparent transition-all duration-300 mr-2",
           // mobile
           "md:static",
           // width control

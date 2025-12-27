@@ -1,49 +1,45 @@
 "use client";
 
 import React from "react";
-import { useMotionValue, useTransform, animate } from "motion/react";
-import { GoogleGeminiEffect } from "../ui/google-gemini-effect";
-import Image from "next/image";
-import Icon from "../../public/favicon.png";
+import { animate, useMotionValue, useTransform } from "motion/react";
 import { Mail } from "lucide-react";
+import { Progress } from "../ui/progress";
+
 export default function Splashscreen() {
   const progress = useMotionValue(0);
+  const progressPercent = useTransform(progress, [0, 1], [0, 100]);
+  const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
     const controls = animate(progress, 1, {
       duration: 6,
       ease: "linear",
       repeat: Infinity,
-      repeatType: "loop",
     });
 
-    return () => controls.stop();
-  }, [progress]);
+    const unsubscribe = progressPercent.on("change", (v) =>
+      setValue(Math.round(v))
+    );
 
-  const pathLengthFirst = useTransform(progress, [0, 1], [0.2, 1.2]);
-  const pathLengthSecond = useTransform(progress, [0, 1], [0.15, 1.2]);
-  const pathLengthThird = useTransform(progress, [0, 1], [0.1, 1.2]);
-  const pathLengthFourth = useTransform(progress, [0, 1], [0.05, 1.2]);
-  const pathLengthFifth = useTransform(progress, [0, 1], [0, 1.2]);
+    return () => {
+      controls.stop();
+      unsubscribe();
+    };
+  }, [progress, progressPercent]);
 
   return (
-    <div className="h-screen w-screen overflow-hidden">
-      <GoogleGeminiEffect
-        pathLengths={[
-          pathLengthFirst,
-          pathLengthSecond,
-          pathLengthThird,
-          pathLengthFourth,
-          pathLengthFifth,
-        ]}
-      >
-        <div className="font-bold bg-linear-to-r from-blue-300 to-green-300 rounded-full md:px-2 md:py-2 px-2 py-1 md:mt-24 mt-8 z-30 md:text-base text-black text-xs  w-fit mx-auto overflow-hidden">
-          <div className="flex flex-col justify-center items-center">
-            <span className="p-5"><Mail className="h-30 w-30 text-white"/></span></div>
-        </div>
+    <div className="h-screen w-screen overflow-hidden justify-center items-center flex flex-col gap-4">
+     
+    <div className="mx-auto mt-8 w-fit overflow-hidden rounded-full bg-linear-to-r from-blue-300 to-green-300 px-2 py-1 text-xs font-bold text-black md:mt-24 md:px-2 md:py-2 md:text-base">
+      <div className="flex flex-col items-center justify-center">
+        <span className="p-5">
+          <Mail className="h-30 w-30 text-white" />
+        </span>
+       
+      </div>
       
-
- </GoogleGeminiEffect>
+    </div>
+      <Progress value={value} className="w-1/6" />
     </div>
   );
 }

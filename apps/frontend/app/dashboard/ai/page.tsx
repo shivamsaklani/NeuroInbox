@@ -1,9 +1,10 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
+import { ArrowUpIcon, Plus } from "lucide-react";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupTextarea } from "@/components/ui/input-group";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 
 const messages = [
   {
@@ -22,46 +23,46 @@ const messages = [
     content: "Sure. I can help you design that.",
   },
   {
-    id: 1,
+    id: 4,
     role: "ai",
     content: "Hello! How can I help you today?",
   },
   {
-    id: 2,
+    id: 5,
     role: "user",
     content: "Build me an AI inbox",
   },
   {
-    id: 3,
+    id: 6,
     role: "ai",
     content: "Sure. I can help you design that.",
   },{
-    id: 1,
+    id: 7,
     role: "ai",
     content: "Hello! How can I help you today?",
   },
   {
-    id: 2,
+    id: 8,
     role: "user",
     content: "Build me an AI inbox",
   },
   {
-    id: 3,
+    id: 9,
     role: "ai",
     content: "Sure. I can help you design that.",
   },
   {
-    id: 1,
+    id: 10,
     role: "ai",
     content: "Hello! How can I help you today?",
   },
   {
-    id: 2,
+    id:11,
     role: "user",
     content: "Build me an AI inbox",
   },
   {
-    id: 3,
+    id: 12,
     role: "ai",
     content: "Sure. I can help you design that.",
   },
@@ -71,12 +72,12 @@ const AIPage = () => {
   return (
     <Card className="flex h-full w-full flex-col overflow-hidden p-0">
       {/* Header */}
-      <div className="flex justify-center items-center px-4 py-3 text-sm font-medium">
+      <div className="flex justify-center ring-1 ring-primary/30 shadow shadow-primary/30 bg-background/40 mb-1 items-center px-4 py-3 text-sm font-medium">
         AI Assistant
       </div>
 
       {/* Chat messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+      <div className="flex-1 scrollbar overflow-y-auto px-4 py-4 space-y-4">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -99,11 +100,42 @@ const AIPage = () => {
 
       {/* Input area */}
       <div className="p-3">
-        <div className="flex items-center gap-2">
-          <Input placeholder="Type a message..." className="flex-1" />
-          <Button size="icon">
-            <Send className="h-4 w-4" />
-          </Button>
+        <div className="flex justify-center items-center gap-2 ">
+          <InputGroup>
+          <InputGroupTextarea placeholder="Ask, Search or Chat..." />
+        <InputGroupAddon align="block-end">
+          <InputGroupButton
+            variant="default"
+            className="rounded-full"
+            size="icon-xs"
+          >
+            <Plus/>
+          </InputGroupButton>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <InputGroupButton variant="ghost">Free</InputGroupButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              side="top"
+              align="start"
+              className="[--radius:0.95rem]"
+            >
+              <DropdownMenuItem>Free</DropdownMenuItem>
+              <DropdownMenuItem>Pro</DropdownMenuItem>
+              <DropdownMenuItem>Bussiness</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <InputGroupButton
+            variant="default"
+            className="rounded-full ml-auto"
+            size="icon-xs"
+            disabled
+          >
+            <ArrowUpIcon/>
+            <span className="sr-only">Send</span>
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
         </div>
       </div>
     </Card>
