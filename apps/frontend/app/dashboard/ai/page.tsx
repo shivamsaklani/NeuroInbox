@@ -1,74 +1,37 @@
 "use client";
 
+import { useState } from "react";
+import ChatBox from "@/components/custom/ChatBox";
 import { Card } from "@/components/ui/card";
-import { ArrowUpIcon, Plus } from "lucide-react";
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupTextarea } from "@/components/ui/input-group";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
 
-const messages = [
-  {
-    id: 1,
-    role: "ai",
-    content: "Hello! How can I help you today?",
-  },
-  {
-    id: 2,
-    role: "user",
-    content: "Build me an AI inbox",
-  },
-  {
-    id: 3,
-    role: "ai",
-    content: "Sure. I can help you design that.",
-  },
-  {
-    id: 4,
-    role: "ai",
-    content: "Hello! How can I help you today?",
-  },
-  {
-    id: 5,
-    role: "user",
-    content: "Build me an AI inbox",
-  },
-  {
-    id: 6,
-    role: "ai",
-    content: "Sure. I can help you design that.",
-  },{
-    id: 7,
-    role: "ai",
-    content: "Hello! How can I help you today?",
-  },
-  {
-    id: 8,
-    role: "user",
-    content: "Build me an AI inbox",
-  },
-  {
-    id: 9,
-    role: "ai",
-    content: "Sure. I can help you design that.",
-  },
-  {
-    id: 10,
-    role: "ai",
-    content: "Hello! How can I help you today?",
-  },
-  {
-    id:11,
-    role: "user",
-    content: "Build me an AI inbox",
-  },
-  {
-    id: 12,
-    role: "ai",
-    content: "Sure. I can help you design that.",
-  },
-];
+type Message = {
+  id: number;
+  role: "user" | "ai";
+  content: string;
+};
 
 const AIPage = () => {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 1,
+      role: "ai",
+      content: "Hello! How can I help you today?",
+    },
+  ]);
+
+  const handleSend = (text: string) => {
+    if (!text.trim()) return;
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        role: "user",
+        content: text,
+      }
+    ]);
+  };
+
   return (
     <Card className="flex h-full w-full flex-col overflow-hidden p-0">
       {/* Header */}
@@ -76,7 +39,7 @@ const AIPage = () => {
         AI Assistant
       </div>
 
-      {/* Chat messages */}
+      {/* Messages */}
       <div className="flex-1 scrollbar overflow-y-auto px-4 py-4 space-y-4">
         {messages.map((msg) => (
           <div
@@ -98,45 +61,9 @@ const AIPage = () => {
         ))}
       </div>
 
-      {/* Input area */}
+      {/* Input */}
       <div className="p-3">
-        <div className="flex justify-center items-center gap-2 ">
-          <InputGroup>
-          <InputGroupTextarea placeholder="Ask, Search or Chat..." />
-        <InputGroupAddon align="block-end">
-          <InputGroupButton
-            variant="default"
-            className="rounded-full"
-            size="icon-xs"
-          >
-            <Plus/>
-          </InputGroupButton>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <InputGroupButton variant="ghost">Free</InputGroupButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              side="top"
-              align="start"
-              className="[--radius:0.95rem]"
-            >
-              <DropdownMenuItem>Free</DropdownMenuItem>
-              <DropdownMenuItem>Pro</DropdownMenuItem>
-              <DropdownMenuItem>Bussiness</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <InputGroupButton
-            variant="default"
-            className="rounded-full ml-auto"
-            size="icon-xs"
-            disabled
-          >
-            <ArrowUpIcon/>
-            <span className="sr-only">Send</span>
-          </InputGroupButton>
-        </InputGroupAddon>
-      </InputGroup>
-        </div>
+        <ChatBox onSend={handleSend} />
       </div>
     </Card>
   );

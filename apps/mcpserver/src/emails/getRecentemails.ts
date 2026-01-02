@@ -71,5 +71,4 @@ const getRecentMails = async () => {
   console.log(result);
   return result;
 };
-getRecentMails();
 export default getRecentMails;
