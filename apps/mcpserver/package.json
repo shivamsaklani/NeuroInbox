@@ -8,7 +8,10 @@
   "private": true,
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/node": "^25.0.3"
+    "@types/node": "^25.2.2"
+  },
+  "scripts": {
+    "build":"tsc --b"
   },
   "peerDependencies": {
     "typescript": "^5.9.3"
@@ -16,7 +19,7 @@
   "dependencies": {
     "@google-cloud/local-auth": "2.1.0",
     "@modelcontextprotocol/sdk": "^1.24.3",
-    "googleapis": "105",
+    "googleapis": "^171.4.0",
     "zod": "3"
   }
 }

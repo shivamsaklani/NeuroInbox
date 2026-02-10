@@ -41,21 +41,18 @@ const LandingHeader = () => {
 }
 //Main Dashboard Page 
 const DashboardHeader = ({ className }: React.ComponentProps<"div">) => {
-  const [search, setsearch] = useState<string>("");
   return (
     <>
       <div className={twJoin(className,"gap-2")}>
-
-
-        <div className="w-6/12 mx-auto">
-          <Input className="rounded-full" value={search} onChange={(e) => { setsearch(e.currentTarget.value) }} placeholder="Search Mail" />
-        </div>
-        <div className="flex flex-row justify-between items-center gap-2">
-
-          <ModeToggle />
+      
+          <div className="flex mx-auto flex-row justify-between items-center gap-2">
+             <ModeToggle />
           <Settings />
           <UserButton />
-        </div>
+
+          </div>
+         
+   
       </div>
     </>
   )
@@ -93,7 +90,7 @@ const Header = ({ variant = "landing", onMenuClick }: HeaderProps) => {
           </div>
           <span className="text-xl font-bold text-balance">NeuroInbox</span>
         </div>
-        {variant === "landing" ? <LandingHeader /> : <DashboardHeader className="hidden sm:flex w-full justify-between px-3" />}
+        {variant === "landing" ? <LandingHeader /> : <DashboardHeader className="hidden sm:flex justify-between" />}
       </div>
     </motion.nav>
   )
