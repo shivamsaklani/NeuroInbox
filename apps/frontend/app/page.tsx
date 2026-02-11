@@ -133,7 +133,7 @@ export default function LandingPage() {
 
 
   return (
-    <div className="min-h-screen w-full background flex flex-col justify-between">
+    <div className="min-h-screen w-full background flex flex-col justify-between animated-bg">
       {/* Header */}
       <Header />
       {/* Hero Section */}
@@ -156,22 +156,39 @@ export default function LandingPage() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {FeatureItems.map((feature, index) => (
-            <Card
+            <motion.div
               key={feature.title}
               initial={{ y: 40, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10"
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="group relative overflow-hidden rounded-xl glass-card p-6 smooth-transition cursor-pointer"
             >
-              <div
-                className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${feature.gradient}`}
+              {/* Hover Gradient Effect */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+
+              <motion.div
+                className={`mb-4 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ${feature.gradient} shadow-lg`}
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.6 }}
               >
-                <feature.icon className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="mb-2 text-xl text-primary font-bold">{feature.title}</h3>
+                <feature.icon className="h-7 w-7 text-white" />
+              </motion.div>
+
+              <h3 className="mb-3 text-xl text-foreground font-bold">{feature.title}</h3>
               <p className="text-foreground/60 leading-relaxed">{feature.description}</p>
-            </Card>
+
+              {/* Arrow Icon on Hover */}
+              <motion.div
+                className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100"
+                initial={{ x: -10 }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ArrowRight className="h-5 w-5 text-foreground/40" />
+              </motion.div>
+            </motion.div>
           ))}
         </div>
       </Wrapper>
@@ -179,144 +196,213 @@ export default function LandingPage() {
 
       {/* Pricing  */}
 
-     <Wrapper sectionid="pricing">
-  <Tabs defaultValue="month" className="w-full">
-    <TabsList className="mx-auto  p-2">
-      <TabsTrigger value="month">Month</TabsTrigger>
-      <TabsTrigger value="year">Year</TabsTrigger>
-    </TabsList>
+      <Wrapper sectionid="pricing">
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16 text-center"
+        >
+          <h2 className="mb-4 text-4xl font-bold text-foreground md:text-5xl">Simple, Transparent Pricing</h2>
+          <p className="mx-auto max-w-2xl text-lg text-foreground/60 text-balance">
+            Choose the perfect plan for your needs. All plans include 14-day free trial.
+          </p>
+        </motion.div>
 
-    {/* Monthly */}
-    <TabsContent value="month" className="mt-10">
-      <div className="grid gap-6 md:grid-cols-3">
-        {pricing.map((plan, index) => {
-          const isPopular = index === 1; // center card
+        <Tabs defaultValue="month" className="w-full">
+          <TabsList className="mx-auto  p-2">
+            <TabsTrigger value="month">Month</TabsTrigger>
+            <TabsTrigger value="year">Year</TabsTrigger>
+          </TabsList>
 
-          return (
-            <CardSpotlight
-              key={plan.type}
-              className={cn(
-                "relative flex flex-col gap-4 rounded-xl p-6 transition-all",
-                isPopular
-                  ? "scale-105 bg-primary text-primary-foreground ring-2 ring-primary shadow-xl"
-                  : "background ring-1 ring-primary/40 shadow-sm hover:scale-[1.02]"
-              )}
-            >
-              {isPopular && (
-                <span className="absolute -top-3 -right-3 rounded-full bg-yellow-400 px-3 py-1 text-xs font-semibold text-black">
-                  Most Popular
-                </span>
-              )}
+          {/* Monthly */}
+          <TabsContent value="month" className="mt-10">
+            <div className="grid gap-6 md:grid-cols-3">
+              {pricing.map((plan, index) => {
+                const isPopular = index === 1; // center card
 
-              <h3 className="text-xl font-semibold">{plan.type}</h3>
+                return (
+                  <motion.div
+                    key={plan.type}
+                    initial={{ y: 40, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    className="smooth-transition h-full"
+                  >
+                    <CardSpotlight
+                      className={cn(
+                        "relative flex flex-col gap-4 rounded-xl p-6 h-full glass-card",
+                        isPopular
+                          ? "scale-105 ring-2 ring-primary shadow-2xl"
+                          : "ring-1 ring-primary/40 shadow-lg"
+                      )}
+                    >
+                      {isPopular && (
+                        <motion.span
+                          className="absolute -top-3 -right-3 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 px-4 py-1.5 text-xs font-semibold text-black shadow-lg"
+                          animate={{ scale: [1, 1.05, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          Most Popular
+                        </motion.span>
+                      )}
 
-              <div className="flex items-end gap-2">
-                <span className="text-3xl font-bold">
-                  ${plan.monthly.discounted}
-                </span>
-                <span
-                  className={cn(
-                    "text-sm line-through",
-                    isPopular
-                      ? "text-primary-foreground/70"
-                      : "text-muted-foreground"
-                  )}
-                >
-                  ${plan.monthly.original}
-                </span>
-                <span className="text-sm opacity-70">/month</span>
-              </div>
+                      <h3 className="text-2xl font-bold">{plan.type}</h3>
 
-              <p
-                className={cn(
-                  "text-sm",
-                  isPopular
-                    ? "text-primary-foreground/80"
-                    : "text-muted-foreground"
-                )}
-              >
-                {plan.subtitle}
-              </p>
+                      <div className="flex items-end gap-2">
+                        <span className="text-4xl font-bold gradient-text">
+                          ${plan.monthly.discounted}
+                        </span>
+                        <span
+                          className={cn(
+                            "text-sm line-through",
+                            isPopular
+                              ? "text-primary-foreground/70"
+                              : "text-muted-foreground"
+                          )}
+                        >
+                          ${plan.monthly.original}
+                        </span>
+                        <span className="text-sm opacity-70">/month</span>
+                      </div>
 
-              <ul className="mt-4 space-y-2 text-sm">
-                {plan.features.map((f, i) => (
-                     <li key={i} className="flex gap-2 flex-row"><CircleCheckIcon />
-                     <span>{f}</span>
-                     </li>
-                ))}
-              </ul>
-            </CardSpotlight>
-          );
-        })}
-      </div>
-    </TabsContent>
+                      <p
+                        className={cn(
+                          "text-sm",
+                          isPopular
+                            ? "text-primary-foreground/80"
+                            : "text-muted-foreground"
+                        )}
+                      >
+                        {plan.subtitle}
+                      </p>
 
-    {/* Yearly */}
-    <TabsContent value="year" className="mt-10">
-      <div className="grid gap-6 md:grid-cols-3">
-        {pricing.map((plan, index) => {
-          const isPopular = index === 1;
+                      <ul className="mt-4 space-y-3 text-sm flex-1">
+                        {plan.features.map((f, i) => (
+                          <motion.li
+                            key={i}
+                            className="flex gap-2 items-center"
+                            initial={{ x: -10, opacity: 0 }}
+                            whileInView={{ x: 0, opacity: 1 }}
+                            transition={{ delay: i * 0.05 }}
+                          >
+                            <CircleCheckIcon className="text-green-500 flex-shrink-0" size={18} />
+                            <span>{f}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
 
-          return (
-            <CardSpotlight
-              key={plan.type}
-              className={cn(
-                "relative flex flex-col gap-4 rounded-xl p-6 transition-all",
-                isPopular
-                  ? "scale-105 bg-primary text-primary-foreground ring-2 ring-primary shadow-xl"
-                  : "background ring-1 ring-primary/40 shadow-sm hover:scale-[1.02]"
-              )}
-            >
-              {isPopular && (
-                <span className="absolute -top-3 -right-3 rounded-full bg-yellow-400 px-3 py-1 text-xs font-semibold text-black">
-                  Best Value
-                </span>
-              )}
+                      <Button
+                        variant={isPopular ? "secondary" : "default"}
+                        className="w-full mt-4 font-semibold"
+                        size="lg"
+                      >
+                        Get Started
+                      </Button>
+                    </CardSpotlight>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </TabsContent>
 
-              <h3 className="text-xl font-semibold">{plan.type}</h3>
+          {/* Yearly */}
+          <TabsContent value="year" className="mt-10">
+            <div className="grid gap-6 md:grid-cols-3">
+              {pricing.map((plan, index) => {
+                const isPopular = index === 1;
 
-              <div className="flex items-end gap-2">
-                <span className="text-3xl font-bold">
-                  ${plan.yearly.discounted}
-                </span>
-                <span
-                  className={cn(
-                    "text-sm line-through",
-                    isPopular
-                      ? "text-primary-foreground/70"
-                      : "text-muted-foreground"
-                  )}
-                >
-                  ${plan.yearly.original}
-                </span>
-                <span className="text-sm opacity-70">/year</span>
-              </div>
+                return (
+                  <motion.div
+                    key={plan.type}
+                    initial={{ y: 40, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    className="smooth-transition h-full"
+                  >
+                    <CardSpotlight
+                      className={cn(
+                        "relative flex flex-col gap-4 rounded-xl p-6 h-full glass-card",
+                        isPopular
+                          ? "scale-105 ring-2 ring-primary shadow-2xl"
+                          : "ring-1 ring-primary/40 shadow-lg"
+                      )}
+                    >
+                      {isPopular && (
+                        <motion.span
+                          className="absolute -top-3 -right-3 rounded-full bg-gradient-to-r from-green-400 to-cyan-400 px-4 py-1.5 text-xs font-semibold text-black shadow-lg"
+                          animate={{ scale: [1, 1.05, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          Best Value
+                        </motion.span>
+                      )}
 
-              <p
-                className={cn(
-                  "text-sm",
-                  isPopular
-                    ? "text-primary-foreground/80"
-                    : "text-muted-foreground"
-                )}
-              >
-                {plan.subtitle}
-              </p>
+                      <h3 className="text-2xl font-bold">{plan.type}</h3>
 
-              <ul className="mt-4 space-y-2 text-sm">
-                 {plan.features.map((f, i) => (
-                     <li key={i} className="flex gap-2 flex-row"><CircleCheckIcon />
-                     <span>{f}</span>
-                     </li>
-                ))}
-              </ul>
-            </CardSpotlight>
-          );
-        })}
-      </div>
-    </TabsContent>
-  </Tabs>
-</Wrapper>
+                      <div className="flex items-end gap-2">
+                        <span className="text-4xl font-bold gradient-text">
+                          ${plan.yearly.discounted}
+                        </span>
+                        <span
+                          className={cn(
+                            "text-sm line-through",
+                            isPopular
+                              ? "text-primary-foreground/70"
+                              : "text-muted-foreground"
+                          )}
+                        >
+                          ${plan.yearly.original}
+                        </span>
+                        <span className="text-sm opacity-70">/year</span>
+                      </div>
+
+                      <p
+                        className={cn(
+                          "text-sm",
+                          isPopular
+                            ? "text-primary-foreground/80"
+                            : "text-muted-foreground"
+                        )}
+                      >
+                        {plan.subtitle}
+                      </p>
+
+                      <ul className="mt-4 space-y-3 text-sm flex-1">
+                        {plan.features.map((f, i) => (
+                          <motion.li
+                            key={i}
+                            className="flex gap-2 items-center"
+                            initial={{ x: -10, opacity: 0 }}
+                            whileInView={{ x: 0, opacity: 1 }}
+                            transition={{ delay: i * 0.05 }}
+                          >
+                            <CircleCheckIcon className="text-green-500 flex-shrink-0" size={18} />
+                            <span>{f}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+
+                      <Button
+                        variant={isPopular ? "secondary" : "default"}
+                        className="w-full mt-4 font-semibold"
+                        size="lg"
+                      >
+                        Get Started
+                      </Button>
+                    </CardSpotlight>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </Wrapper>
 
 
 
@@ -337,7 +423,7 @@ export default function LandingPage() {
         </motion.div>
 
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3">
           {workItems.map((step, index) => (
             <motion.div
               key={step.step}
@@ -345,13 +431,26 @@ export default function LandingPage() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="relative"
+              whileHover={{ y: -5 }}
+              className="relative glass-card p-8 rounded-xl smooth-transition"
             >
-              <div className="mb-4 text-5xl font-bold text-primary">{step.step}</div>
-              <h3 className="mb-2 text-2xl font-bold">{step.title}</h3>
+              <motion.div
+                className="mb-6 text-6xl font-bold gradient-text"
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200 }}
+              >
+                {step.step}
+              </motion.div>
+              <h3 className="mb-3 text-2xl font-bold text-foreground">{step.title}</h3>
               <p className="text-foreground/60 leading-relaxed">{step.description}</p>
               {index < 2 && (
-                <div className="absolute -right-4 top-1/2 hidden h-px w-8 -translate-y-1/2 bg-gradient-to-r from-white/20 to-transparent md:block" />
+                <motion.div
+                  className="absolute -right-4 top-1/2 hidden h-px w-8 -translate-y-1/2 bg-gradient-to-r from-primary/50 to-transparent md:block"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                />
               )}
             </motion.div>
           ))}
@@ -361,27 +460,59 @@ export default function LandingPage() {
 
       {/* CTA Section */}
       <Wrapper>
-        <Card
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
           whileHover={{ y: -6 }}
-          transition={{ type: "spring", stiffness: 200 }}
-          className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#6366f1]/20 to-[#14b8a6]/20 p-12 text-center backdrop-blur-sm">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#6366f1]/10 to-[#14b8a6]/10" />
-          <CardContent>
-            <div className="relative">
-              <h2 className="mb-4 text-4xl font-bold text-foreground md:text-5xl">Ready to transform your inbox?</h2>
-              <p className="mb-8 text-lg text-foreground">
-                Join thousands of professionals using AI to master their email workflow
-              </p>
-              <Link href="/dashboard">
-                <Button size="lg" variant="secondary">
-                  Get Started for Free
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
+          className="relative overflow-hidden rounded-3xl glass-card p-16 text-center"
+        >
+          {/* Animated Background Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#6366f1]/20 via-[#14b8a6]/20 to-[#8b5cf6]/20 mesh-gradient" />
 
-          </CardContent>
-        </Card>
+          {/* Glow Effect */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#6366f1]/30 to-[#14b8a6]/30 rounded-full blur-3xl" />
+
+          <div className="relative z-10">
+            <motion.h2
+              className="mb-4 text-5xl font-bold text-foreground md:text-6xl"
+              initial={{ scale: 0.9 }}
+              whileInView={{ scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              Ready to transform{" "}
+              <span className="gradient-text">your inbox?</span>
+            </motion.h2>
+
+            <motion.p
+              className="mb-10 text-xl text-foreground/70 max-w-2xl mx-auto"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              Join thousands of professionals using AI to master their email workflow
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <Link href="/dashboard">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button size="lg" variant="secondary" className="btn-glow px-10 py-7 text-lg font-semibold shadow-2xl">
+                    Get Started for Free
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </motion.div>
+              </Link>
+            </motion.div>
+          </div>
+        </motion.div>
       </Wrapper>
       {/* Footer */}
       <footer className="border-t border-white/10 px-6 py-12">

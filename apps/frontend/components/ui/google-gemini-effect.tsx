@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 
 const transition = {
   duration: 0,
-  ease: "linear",
+  ease: [0, 0, 1, 1] as const,
 };
 
 export const GoogleGeminiEffect = ({
@@ -17,13 +17,13 @@ export const GoogleGeminiEffect = ({
   title?: string;
   description?: string;
   className?: string;
-  children?:ReactNode
+  children?: ReactNode
 }) => {
   return (
     <div className={cn("sticky top-0", className)}>
-    
+
       <div className="w-full h-[890px] -top-55 md:-top-35  flex items-center justify-center bg-red-transparent absolute ">
-          {children}
+        {children}
       </div>
       <svg
         width="1440"

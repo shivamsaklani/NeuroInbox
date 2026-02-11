@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./animations.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -48,7 +49,7 @@
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.985 0 0);
   --primary-foreground: oklch(0.205 0 0);
-  --secondary:oklch(0.269 0 0);
+  --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
@@ -123,31 +124,37 @@
 
 @layer utilities {
   .background {
-    @apply bg-white text-black;
+    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 text-black;
   }
 
   .dark .background {
-    @apply bg-gradient-to-br from-[#0a0a0f] via-[#1a1a2e] to-[#0a0a0f] text-white;
+    @apply bg-gradient-to-br from-[#0a0a0f] via-[#1a1a2e] to-[#0f0f1e] text-white;
   }
+
   .hover {
     @apply bg-accent
   }
-    .scrollbar::-webkit-scrollbar {
-      width:10px;
-      height: 30px;
-    }
-    .scrollbar::-webkit-scrollbar-track{
-      border-radius: 100vh;
-      background:#c2e6fe;
-    }
-    .scrollbar::-webkit-scrollbar-thumb{
-      background:#79bae6;
-      border-radius:100vh ;
-    }
-    .scrollbar::-webkit-scrollbar-thumb:hover{
-      background: #259ceb;
-    }
-      .dark .scrollbar::-webkit-scrollbar-track {
+
+  .scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 30px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #c2e6fe;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #79bae6;
+    border-radius: 100vh;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #259ceb;
+  }
+
+  .dark .scrollbar::-webkit-scrollbar-track {
     background: #1a1a2e;
   }
 
@@ -160,5 +167,3 @@
   }
 
 }
-
-

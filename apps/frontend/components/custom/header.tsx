@@ -1,5 +1,5 @@
 import { Mail, MenuIcon, Settings } from "lucide-react";
-import * as motion  from "motion/react-client";
+import * as motion from "motion/react-client";
 import Link from "next/link";
 import { ModeToggle } from "./themebtn";
 import { Button } from "../ui/button";
@@ -9,6 +9,7 @@ import { UserButton } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { MenuBar } from "./MenuBar";
 import { twJoin } from "tailwind-merge";
+import Image from "next/image";
 
 type HeaderProps = {
   variant?: "landing" | "dashboard";
@@ -34,7 +35,7 @@ const LandingHeader = () => {
       </div>
       <div className=" hidden md:flex md:flex-row gap-4">
         <Button variant="secondary" onClick={() => router.push("/signup")}>Get Started</Button>
-        <Button  variant="default" onClick={() => router.push("/signin")}>Signin</Button>
+        <Button variant="default" onClick={() => router.push("/signin")}>Signin</Button>
       </div>
     </>
   )
@@ -43,16 +44,16 @@ const LandingHeader = () => {
 const DashboardHeader = ({ className }: React.ComponentProps<"div">) => {
   return (
     <>
-      <div className={twJoin(className,"gap-2")}>
-      
-          <div className="flex mx-auto flex-row justify-between items-center gap-2">
-             <ModeToggle />
+      <div className={twJoin(className, "gap-2")}>
+
+        <div className="flex mx-auto flex-row justify-between items-center gap-2">
+          <ModeToggle />
           <Settings />
           <UserButton />
 
-          </div>
-         
-   
+        </div>
+
+
       </div>
     </>
   )
@@ -76,7 +77,7 @@ const Header = ({ variant = "landing", onMenuClick }: HeaderProps) => {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 right-0 z-50 ${scroll ? "background" : "bg-transparent"}`}
+      className="fixed top-0 left-0 right-0 z-[100] bg-sidebar/95 backdrop-blur-md border-b border-sidebar-border"
     >
       <div className="px-2 flex max-w-full items-center justify-between py-4">
 
@@ -85,10 +86,20 @@ const Header = ({ variant = "landing", onMenuClick }: HeaderProps) => {
             <MenuBar onMenuClick={onMenuClick} />
           )}
 
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366f1] to-[#14b8a6]">
-            <Mail className="h-6 w-6 text-white" />
-          </div>
-          <span className="text-xl font-bold text-balance">NeuroInbox</span>
+          <motion.div
+            className="relative flex h-12 w-12 items-center justify-center"
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Image
+              src="/logo.png"
+              alt="NeuroInbox Logo"
+              width={48}
+              height={48}
+              className="object-contain"
+            />
+          </motion.div>
+          <span className="text-xl font-bold text-balance bg-gradient-to-r from-[#6366f1] to-[#14b8a6] bg-clip-text text-transparent">NeuroInbox</span>
         </div>
         {variant === "landing" ? <LandingHeader /> : <DashboardHeader className="hidden sm:flex justify-between" />}
       </div>
