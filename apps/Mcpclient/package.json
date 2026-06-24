@@ -1,0 +1,30 @@
+{
+  "name": "mcpserver",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.2.2",
+    "@types/cors": "^2.8.19",
+    "@types/passport-google-oauth20": "^2.0.17"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "bun ./dist/server.js",
+    "dev": "bun --watch src/server.ts"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "googleapis": "^171.4.0",
+    "zod": "3"
+  }
+}

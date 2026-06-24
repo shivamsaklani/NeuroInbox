@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import session from "express-session";
 import Auth from "./passportAuth/passport.js";
-import passport, { authorize } from "passport";
+import passport from "passport";
 import cors from "cors";
 import createMcpserver from "./mcpserver/mcpserver.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
